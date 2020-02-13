@@ -1,4 +1,4 @@
-export interface PrinterCommand {
+export interface Command {
   type: string;
   [key: string]: any;
 }
@@ -203,7 +203,9 @@ export const PrinterConstants = {
     LINE_HEIGHT: 10,
     CHARACTER_RIGHT_MARGIN: 11,
     FONT_MODE: 16,
-    FONT_SIZE: 17
+    FONT_SIZE: 17,
+    CODE_PAGE: 18,
+    CODE_PAGE_CP874: 47
   },
   BarcodeType: {
     UPC_A: 0,
@@ -236,7 +238,7 @@ export const printerCommand = {
   setLeftMargin
 };
 
-export const Printertools = {
+export const printerTools = {
   generateKeyValuePair,
   generatePattern
 };

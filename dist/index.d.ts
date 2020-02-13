@@ -1,4 +1,5 @@
 import { Printer } from "./model";
+import { Command, PrinterConstants, printerCommand, printerTools } from "./printerCommand";
 declare type Callback = (devices: Printer[]) => void;
 declare class PrinterModule {
     printerModule: any;
@@ -15,5 +16,6 @@ declare class PrinterModule {
     private listenToNativeEvent;
     private log;
 }
-declare const printer: PrinterModule;
-export default printer;
+declare const RNPosPrinter: PrinterModule;
+export { RNPosPrinter, Command, PrinterConstants, printerCommand, printerTools };
+export default RNPosPrinter;

@@ -39,6 +39,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_native_1 = require("react-native");
 var isAndroid = react_native_1.Platform.OS === "android";
 var printerCommand_1 = require("./printerCommand");
+exports.PrinterConstants = printerCommand_1.PrinterConstants;
+exports.printerCommand = printerCommand_1.printerCommand;
+exports.printerTools = printerCommand_1.printerTools;
 var PrinterModule = /** @class */ (function () {
     function PrinterModule() {
         this.isDebug = false;
@@ -102,7 +105,7 @@ var PrinterModule = /** @class */ (function () {
                         ];
                         cmd.push(printerCommand_1.printerCommand.printLine("RECEIPT TITLE"));
                         cmd.push(printerCommand_1.printerCommand.printSeparator30("-----"));
-                        cmd.push(printerCommand_1.printerCommand.printKeyValue30(printerCommand_1.Printertools.generateKeyValuePair("", "Price", 0), "50$"));
+                        cmd.push(printerCommand_1.printerCommand.printKeyValue30(printerCommand_1.printerTools.generateKeyValuePair("", "Price", 0), "50$"));
                         cmd.push(printerCommand_1.printerCommand.printLine(""));
                         if (storageUrl)
                             cmd.push(printerCommand_1.printerCommand.printImageFromStorage(storageUrl));
@@ -150,6 +153,7 @@ var PrinterModule = /** @class */ (function () {
     };
     return PrinterModule;
 }());
-var printer = new PrinterModule();
-exports.default = printer;
+var RNPosPrinter = new PrinterModule();
+exports.RNPosPrinter = RNPosPrinter;
+exports.default = RNPosPrinter;
 //# sourceMappingURL=index.js.map

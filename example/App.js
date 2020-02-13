@@ -3,11 +3,16 @@ import {
   StyleSheet,
   Text,
   View,
+  Button,
   FlatList,
   TouchableOpacity
 } from "react-native";
-import RNPosPrinter from "react-native-pos-printer";
-import { Button } from "react-native";
+import {
+  RNPosPrinter,
+  PrinterConstants,
+  printerCommand,
+  printerTools
+} from "react-native-pos-printer";
 
 const App = () => {
   const [devices, setDevices] = useState([]);
@@ -28,16 +33,40 @@ const App = () => {
       .catch(err => console.log(err));
   };
 
-  const printTestReceipt = () => {
+  const printTestReceipt = async () => {
     console.log("printTestReceipt");
 
-    RNPosPrinter.printTestReceipt()
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+    const cmd = [
+      printerCommand.setPrinter(
+        PrinterConstants.Command.CODE_PAGE,
+        PrinterConstants.Command.CODE_PAGE_CP874
+      ),
+      printerCommand.setPrinter(
+        PrinterConstants.Command.ALIGN,
+        PrinterConstants.Command.ALIGN_CENTER
+      ),
+      printerCommand.setFont(0, 0, 0, 0)
+    ];
+
+    cmd.push(printerCommand.printLine("ไทย"));
+    cmd.push(printerCommand.printSeparator30("-----"));
+    cmd.push(printerCommand.printLine(""));
+
+    try {
+      await RNPosPrinter.printerModule.addCommands(cmd);
+      if (this.deviceEventEmitter) this.deviceEventEmitter.remove();
+      console.log("Done");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
     console.log(RNPosPrinter);
+
+    RNPosPrinter.init()
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
   });
 
   return (

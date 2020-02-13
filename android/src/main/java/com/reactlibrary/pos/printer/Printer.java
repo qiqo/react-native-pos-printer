@@ -15,7 +15,7 @@ public class Printer {
     private IPrintingService service;
     private static final long serialVersionUID = 1L;
     private static String TAG = "PrinterInstance";
-    private String charsetName = "gbk";
+    private String charsetName = "utf8";
     private final String SDK_VERSION = "3.0";
 
     public Printer(IPrintingService service) {
@@ -231,9 +231,6 @@ public class Printer {
                 if (value > 2 || value < 0) {
                     return false;
                 }
-            case 14:
-            case 15:
-            default:
                 break;
             case 16:
                 arrayOfByte[0] = 27;
@@ -242,6 +239,11 @@ public class Printer {
             case 17:
                 arrayOfByte[0] = 29;
                 arrayOfByte[1] = 33;
+                break;
+            case 18:
+                arrayOfByte[0] = 27;
+                arrayOfByte[1] = 116;
+                break;
         }
 
         arrayOfByte[2] = (byte) value;

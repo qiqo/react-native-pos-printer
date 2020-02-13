@@ -5,10 +5,10 @@ import { Printer } from "./model";
 const isAndroid: boolean = Platform.OS === "android";
 
 import {
-  PrinterCommand,
-  printerCommand,
+  Command,
   PrinterConstants,
-  Printertools
+  printerCommand,
+  printerTools
 } from "./printerCommand";
 
 type Callback = (devices: Printer[]) => void;
@@ -69,7 +69,7 @@ class PrinterModule {
 
   // printer all commands to printer
   public async printTestReceipt(storageUrl?: string) {
-    const cmd: PrinterCommand[] = [
+    const cmd: Command[] = [
       printerCommand.setPrinter(
         PrinterConstants.Command.ALIGN,
         PrinterConstants.Command.ALIGN_CENTER
@@ -81,7 +81,7 @@ class PrinterModule {
     cmd.push(printerCommand.printSeparator30("-----"));
     cmd.push(
       printerCommand.printKeyValue30(
-        Printertools.generateKeyValuePair("", "Price", 0),
+        printerTools.generateKeyValuePair("", "Price", 0),
         "50$"
       )
     );
@@ -126,6 +126,13 @@ class PrinterModule {
   }
 }
 
-const printer: PrinterModule = new PrinterModule();
+const RNPosPrinter: PrinterModule = new PrinterModule();
 
-export default printer;
+export {
+  RNPosPrinter,
+  Command,
+  PrinterConstants,
+  printerCommand,
+  printerTools
+};
+export default RNPosPrinter;

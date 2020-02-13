@@ -206,7 +206,6 @@ public class RNPosPrinterModule extends ReactContextBaseJavaModule {
                     Barcode barcode = new Barcode(barcodeType, param1, param2, param3, content);
                     printer.printBarCode(barcode);
                     break;
-
             }
         }
 

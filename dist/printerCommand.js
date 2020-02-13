@@ -154,7 +154,7 @@ function printBarCode(barcodeType, param1, param2, param3, content) {
         content: content
     };
 }
-var PrinterConstants = {
+exports.PrinterConstants = {
     Command: {
         INIT_PRINTER: 0,
         WAKE_PRINTER: 1,
@@ -173,7 +173,9 @@ var PrinterConstants = {
         LINE_HEIGHT: 10,
         CHARACTER_RIGHT_MARGIN: 11,
         FONT_MODE: 16,
-        FONT_SIZE: 17
+        FONT_SIZE: 17,
+        CODE_PAGE: 18,
+        CODE_PAGE_CP874: 47
     },
     BarcodeType: {
         UPC_A: 0,
@@ -190,8 +192,7 @@ var PrinterConstants = {
         QRCODE: 102
     }
 };
-exports.PrinterConstants = PrinterConstants;
-var printerCommand = {
+exports.printerCommand = {
     setPrinter: setPrinter,
     setFont: setFont,
     printText: printText,
@@ -205,10 +206,8 @@ var printerCommand = {
     printBarCode: printBarCode,
     setLeftMargin: setLeftMargin
 };
-exports.printerCommand = printerCommand;
-var Printertools = {
+exports.printerTools = {
     generateKeyValuePair: generateKeyValuePair,
     generatePattern: generatePattern
 };
-exports.Printertools = Printertools;
 //# sourceMappingURL=printerCommand.js.map
