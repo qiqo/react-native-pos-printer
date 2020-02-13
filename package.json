@@ -1,32 +1,36 @@
 {
-    "name": "react-native-pos-printer",
-    "version": "1.0.5",
-    "description": "library for pos printer on react native",
-    "main": "dist/index.js",
-    "scripts": {
-        "lint": "tslint --project tsconfig.json",
-        "lint-fix": "tslint --fix -c tslint.json 'src/**/*.ts'",
-        "build": "rm -rf dist; tsc",
-        "push": "git add .; git commit -m \"git push\"; git push origin master;"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/martinluternn/posprinter"
-    },
-    "keywords": [
-        "react-native",
-        "POS",
-        "printer"
-    ],
-    "author": "martinlutern",
-    "license": "MIT",
-    "devDependencies": {
-        "@types/react-native": "^0.57.36",
-        "react-native": "^0.58.4",
-        "rn-fetch-blob": "^0.10.15",
-        "ts-node": "^8.3.0",
-        "tslint": "^5.12.1",
-        "typescript": "^3.3.3"
-    },
-    "nativePackage": true
+  "name": "react-native-pos-printer",
+  "version": "1.0.5",
+  "description": "library for pos printer on react native",
+  "main": "dist/index.js",
+  "scripts": {
+    "lint": "tslint --project tsconfig.json",
+    "lint-fix": "tslint --fix -c tslint.json 'src/**/*.ts'",
+    "build": "rm -rf dist; tsc",
+    "push": "git add .; git commit -m \"git push\"; git push origin master;",
+    "build-win": "rd /s /q dist & tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bencomtech/react-native-esc-pos-printer.git",
+    "baseUrl": "https://github.com/bencomtech/react-native-esc-pos-printer"
+  },
+  "keywords": [
+    "react-native",
+    "POS",
+    "printer"
+  ],
+  "author": {
+    "name": "Pichid Detson",
+    "email": "bencomtech@gmail.com"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react-native": "^0.57.36",
+    "react-native": "^0.58.4",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3"
+  },
+  "nativePackage": true
 }

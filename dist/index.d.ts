@@ -1,4 +1,4 @@
-import { Printer } from './model';
+import { Printer } from "./model";
 declare type Callback = (devices: Printer[]) => void;
 declare class PrinterModule {
     printerModule: any;
@@ -11,11 +11,9 @@ declare class PrinterModule {
     scanDevices(callback: Callback): Promise<boolean>;
     stopScanDevices(): Promise<boolean>;
     connectDevice(deviceID: string, timeout?: number): Promise<any>;
-    connectAndPrintReceipt(deviceId: string): Promise<void>;
+    printTestReceipt(storageUrl?: string): Promise<void>;
     private listenToNativeEvent;
     private log;
-    private initiatePrintReceipt;
-    private printTestReceipt;
 }
 declare const printer: PrinterModule;
 export default printer;

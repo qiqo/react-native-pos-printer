@@ -185,4 +185,4 @@ declare const Printertools: {
     generateKeyValuePair: typeof generateKeyValuePair;
     generatePattern: typeof generatePattern;
 };
-export { PrinterConstants, printerCommand, Printertools, };
+export { PrinterConstants, printerCommand, Printertools };
