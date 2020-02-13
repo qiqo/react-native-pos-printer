@@ -36,9 +36,11 @@ declare function printText(text: string): {
  * print image (note: image will always download to storage first before printed)
  * @param url
  */
-declare function printImageFromStorage(url: string): {
+declare function printImageFromStorage(url: string, width?: number, height?: number): {
     type: string;
     url: string;
+    width: number;
+    height: number;
 };
 /**
  * to create pattern separator with length

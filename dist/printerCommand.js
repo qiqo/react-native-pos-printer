@@ -40,10 +40,14 @@ function printText(text) {
  * print image (note: image will always download to storage first before printed)
  * @param url
  */
-function printImageFromStorage(url) {
+function printImageFromStorage(url, width, height) {
+    if (width === void 0) { width = 250; }
+    if (height === void 0) { height = 250; }
     return {
         type: "printImageFromStorage",
-        url: url
+        url: url,
+        width: width,
+        height: height
     };
 }
 /**

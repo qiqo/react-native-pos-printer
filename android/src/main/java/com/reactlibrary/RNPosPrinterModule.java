@@ -185,7 +185,9 @@ public class RNPosPrinterModule extends ReactContextBaseJavaModule {
                     break;
                 case "printImageFromStorage":
                     String url = map.getString("url");
-                    printer.printImageFromStorage(url);
+                    int dstWidth = map.getInt("width");
+                    int dstHeight = map.getInt("height");
+                    printer.printImageFromStorage(url, dstWidth, dstHeight);
                     break;
                 case "setCharacterMultiple":
                     int x1 = map.getInt("x");

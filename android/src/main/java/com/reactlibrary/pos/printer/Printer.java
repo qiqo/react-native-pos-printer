@@ -15,7 +15,7 @@ public class Printer {
     private IPrintingService service;
     private static final long serialVersionUID = 1L;
     private static String TAG = "PrinterInstance";
-    private String charsetName = "utf8";
+    private String charsetName = "gbk";
     private final String SDK_VERSION = "3.0";
 
     public Printer(IPrintingService service) {
@@ -73,7 +73,7 @@ public class Printer {
         }
     }
 
-    public int printImageFromStorage(final String url) {
+    public int printImageFromStorage(final String url, int dstWidth, int dstHeight) {
         byte[] data = null;
 
         File file = new File(url);
@@ -89,7 +89,7 @@ public class Printer {
         }
 
         if (bitmap != null) {
-            Bitmap bmScale = Bitmap.createScaledBitmap(bitmap, 250, 250, false);
+            Bitmap bmScale = Bitmap.createScaledBitmap(bitmap, dstWidth, dstHeight, false);
             Bitmap blackWhiteBitmap = PrinterImageUtils.convertToBlackAndWhiteImage(PrinterImageUtils.addPadding(bmScale, 69, 0));
             data = PrinterImageUtils.decodeBitmap(blackWhiteBitmap);
         }

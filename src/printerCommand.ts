@@ -51,10 +51,16 @@ function printText(text: string) {
  * print image (note: image will always download to storage first before printed)
  * @param url
  */
-function printImageFromStorage(url: string) {
+function printImageFromStorage(
+  url: string,
+  width: number = 250,
+  height: number = 250
+) {
   return {
     type: "printImageFromStorage",
-    url
+    url,
+    width,
+    height
   };
 }
 
@@ -204,8 +210,7 @@ export const PrinterConstants = {
     CHARACTER_RIGHT_MARGIN: 11,
     FONT_MODE: 16,
     FONT_SIZE: 17,
-    CODE_PAGE: 18,
-    CODE_PAGE_CP874: 47
+    CODE_PAGE: 18
   },
   BarcodeType: {
     UPC_A: 0,

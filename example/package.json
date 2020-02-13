@@ -11,7 +11,8 @@
   "dependencies": {
     "react": "16.8.3",
     "react-native": "0.59.10",
-    "react-native-pos-printer": "file:../"
+    "react-native-pos-printer": "file:../",
+    "rn-fetch-blob": "0.10.15"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
