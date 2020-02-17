@@ -5,9 +5,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 function setPrinter(command, value) {
     return {
-        type: 'setPrinter',
+        type: "setPrinter",
         command: command,
-        value: value,
+        value: value
     };
 }
 /**
@@ -19,11 +19,11 @@ function setPrinter(command, value) {
  */
 function setFont(width, height, bold, underline) {
     return {
-        type: 'setFont',
+        type: "setFont",
         width: width,
         height: height,
         bold: bold,
-        underline: underline,
+        underline: underline
     };
 }
 /**
@@ -32,18 +32,22 @@ function setFont(width, height, bold, underline) {
  */
 function printText(text) {
     return {
-        type: 'printText',
-        text: text,
+        type: "printText",
+        text: text
     };
 }
 /**
  * print image (note: image will always download to storage first before printed)
  * @param url
  */
-function printImageFromStorage(url) {
+function printImageFromStorage(url, width, height) {
+    if (width === void 0) { width = 250; }
+    if (height === void 0) { height = 250; }
     return {
-        type: 'printImageFromStorage',
+        type: "printImageFromStorage",
         url: url,
+        width: width,
+        height: height
     };
 }
 /**
@@ -52,7 +56,7 @@ function printImageFromStorage(url) {
  * @param length
  */
 function generatePattern(pattern, length) {
-    var totalPattern = '';
+    var totalPattern = "";
     while (totalPattern.length < length) {
         totalPattern += pattern;
     }
@@ -86,7 +90,7 @@ function generateKeyValuePair(key, value, length) {
         key = key.substr(0, key.length - diff);
         spaceLength = 1;
     }
-    var space = generatePattern('     ', spaceLength);
+    var space = generatePattern("     ", spaceLength);
     return key + space + value;
 }
 /**
@@ -110,7 +114,7 @@ function printKeyValue46(key, value) {
  * @param text
  */
 function printLine(text) {
-    return printText(text + '\n');
+    return printText(text + "\n");
 }
 /**
  * set multiple char
@@ -119,9 +123,9 @@ function printLine(text) {
  */
 function setCharacterMultiple(x, y) {
     return {
-        type: 'setCharacterMultiple',
+        type: "setCharacterMultiple",
         x: x,
-        y: y,
+        y: y
     };
 }
 /**
@@ -131,9 +135,9 @@ function setCharacterMultiple(x, y) {
  */
 function setLeftMargin(x, y) {
     return {
-        type: 'setLeftMargin',
+        type: "setLeftMargin",
         x: x,
-        y: y,
+        y: y
     };
 }
 /**
@@ -146,15 +150,15 @@ function setLeftMargin(x, y) {
  */
 function printBarCode(barcodeType, param1, param2, param3, content) {
     return {
-        type: 'printBarCode',
+        type: "printBarCode",
         barcodeType: barcodeType,
         param1: param1,
         param2: param2,
         param3: param3,
-        content: content,
+        content: content
     };
 }
-var PrinterConstants = {
+exports.PrinterConstants = {
     Command: {
         INIT_PRINTER: 0,
         WAKE_PRINTER: 1,
@@ -174,6 +178,8 @@ var PrinterConstants = {
         CHARACTER_RIGHT_MARGIN: 11,
         FONT_MODE: 16,
         FONT_SIZE: 17,
+        CODE_PAGE: 18,
+        CODE_PAGE_CP874: 47
     },
     BarcodeType: {
         UPC_A: 0,
@@ -187,11 +193,10 @@ var PrinterConstants = {
         CODE128: 73,
         PDF417: 100,
         DATAMATRIX: 101,
-        QRCODE: 102,
-    },
+        QRCODE: 102
+    }
 };
-exports.PrinterConstants = PrinterConstants;
-var printerCommand = {
+exports.printerCommand = {
     setPrinter: setPrinter,
     setFont: setFont,
     printText: printText,
@@ -203,12 +208,10 @@ var printerCommand = {
     printKeyValue46: printKeyValue46,
     setCharacterMultiple: setCharacterMultiple,
     printBarCode: printBarCode,
-    setLeftMargin: setLeftMargin,
+    setLeftMargin: setLeftMargin
 };
-exports.printerCommand = printerCommand;
-var Printertools = {
+exports.printerTools = {
     generateKeyValuePair: generateKeyValuePair,
-    generatePattern: generatePattern,
+    generatePattern: generatePattern
 };
-exports.Printertools = Printertools;
 //# sourceMappingURL=printerCommand.js.map

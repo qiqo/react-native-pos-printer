@@ -1,4 +1,4 @@
-export interface PrinterCommand {
+export interface Command {
     type: string;
     [key: string]: any;
 }
@@ -36,9 +36,11 @@ declare function printText(text: string): {
  * print image (note: image will always download to storage first before printed)
  * @param url
  */
-declare function printImageFromStorage(url: string): {
+declare function printImageFromStorage(url: string, width?: number, height?: number): {
     type: string;
     url: string;
+    width: number;
+    height: number;
 };
 /**
  * to create pattern separator with length
@@ -131,7 +133,7 @@ declare function printBarCode(barcodeType: number, param1: number, param2: numbe
     param3: number;
     content: string;
 };
-declare const PrinterConstants: {
+export declare const PrinterConstants: {
     Command: {
         INIT_PRINTER: number;
         WAKE_PRINTER: number;
@@ -151,6 +153,8 @@ declare const PrinterConstants: {
         CHARACTER_RIGHT_MARGIN: number;
         FONT_MODE: number;
         FONT_SIZE: number;
+        CODE_PAGE: number;
+        CODE_PAGE_CP874: number;
     };
     BarcodeType: {
         UPC_A: number;
@@ -167,7 +171,7 @@ declare const PrinterConstants: {
         QRCODE: number;
     };
 };
-declare const printerCommand: {
+export declare const printerCommand: {
     setPrinter: typeof setPrinter;
     setFont: typeof setFont;
     printText: typeof printText;
@@ -181,8 +185,8 @@ declare const printerCommand: {
     printBarCode: typeof printBarCode;
     setLeftMargin: typeof setLeftMargin;
 };
-declare const Printertools: {
+export declare const printerTools: {
     generateKeyValuePair: typeof generateKeyValuePair;
     generatePattern: typeof generatePattern;
 };
-export { PrinterConstants, printerCommand, Printertools, };
+export {};

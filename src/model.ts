@@ -1,4 +1,4 @@
 export interface Printer {
-    identifier: string;
-    name: string;
+  identifier: string;
+  name: string;
 }

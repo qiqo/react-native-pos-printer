@@ -1,7 +1,4 @@
-
 package com.reactlibrary;
-
-import android.content.Context;
 
 import com.android.print.sdk.Barcode;
 import com.facebook.react.bridge.Arguments;
@@ -14,15 +11,15 @@ import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.reactlibrary.printer.printing.DeviceConnectionStatus;
-import com.reactlibrary.printer.printing.DeviceConnectionStatusCallbacks;
-import com.reactlibrary.printer.printing.DiscoveryCallbacks;
-import com.reactlibrary.printer.printing.Printer;
-import com.reactlibrary.printer.printing.PrinterUtils;
-import com.reactlibrary.printer.printing.bluetooth.BluetoothDiscoverer;
-import com.reactlibrary.printer.printing.interfaces.IDevice;
-import com.reactlibrary.printer.printing.interfaces.IDeviceDiscoverer;
-import com.reactlibrary.printer.printing.interfaces.IPrintingService;
+import com.reactlibrary.pos.DeviceConnectionStatus;
+import com.reactlibrary.pos.DeviceConnectionStatusCallbacks;
+import com.reactlibrary.pos.DiscoveryCallbacks;
+import com.reactlibrary.pos.printer.Printer;
+import com.reactlibrary.pos.printer.PrinterUtils;
+import com.reactlibrary.pos.bluetooth.BluetoothDiscoverer;
+import com.reactlibrary.pos.interfaces.IDevice;
+import com.reactlibrary.pos.interfaces.IDeviceDiscoverer;
+import com.reactlibrary.pos.interfaces.IPrintingService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,15 +27,17 @@ import java.util.List;
 import java.util.Map;
 
 public class RNPosPrinterModule extends ReactContextBaseJavaModule {
-    List<IDeviceDiscoverer> deviceDiscoverers = new ArrayList<>();
-    Map<String, IDevice> deviceMap = new HashMap<>();
-    Map<String, IDevice> bondedDeviceMap = new HashMap<>();
-    RNPosPrinterModule ref = this;
-    IPrintingService selectedPrinterService = null;
-    Printer printer = new Printer();
+
+    private List<IDeviceDiscoverer> deviceDiscoverers = new ArrayList<>();
+    private Map<String, IDevice> deviceMap = new HashMap<>();
+    private Map<String, IDevice> bondedDeviceMap = new HashMap<>();
+    private RNPosPrinterModule ref = this;
+    private IPrintingService selectedPrinterService = null;
+    private Printer printer = new Printer();
 
     public RNPosPrinterModule(ReactApplicationContext reactContext) {
         super(reactContext);
+
         deviceDiscoverers.add(new BluetoothDiscoverer(this.getReactApplicationContext()));
     }
 
@@ -61,6 +60,7 @@ public class RNPosPrinterModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void getDevices(Promise promise) {
         Map<String, IDevice> bondedDeviceMap = new HashMap<>();
+
         for (IDeviceDiscoverer discoverer : this.deviceDiscoverers) {
             for (IDevice device : discoverer.getDevices()) {
                 if (!bondedDeviceMap.containsKey(device.getIdentifier()))
@@ -69,6 +69,7 @@ public class RNPosPrinterModule extends ReactContextBaseJavaModule {
         }
 
         WritableArray arrDevices = Arguments.createArray();
+
         for (IDevice device : bondedDeviceMap.values()) {
             arrDevices.pushMap(fromDevice(device));
         }
@@ -107,8 +108,6 @@ public class RNPosPrinterModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void connectDevice(String identifier, int timeout, final Promise promise) {
-
-//      get all bonded devices
         if (this.bondedDeviceMap.keySet().size() < 1) {
             for (IDeviceDiscoverer discoverer : this.deviceDiscoverers) {
                 for (IDevice device : discoverer.getDevices()) {
@@ -126,6 +125,7 @@ public class RNPosPrinterModule extends ReactContextBaseJavaModule {
         IDevice device = this.bondedDeviceMap.get(identifier);
         IPrintingService service = null;
         selectedPrinterService = null;
+
         try {
             service = device.startService(new DeviceConnectionStatusCallbacks() {
                 @Override
@@ -148,6 +148,7 @@ public class RNPosPrinterModule extends ReactContextBaseJavaModule {
             promise.reject("PRINTER IS UNAVAILABLE", "Printer is unavailable");
             return;
         }
+
         if (selectedPrinterService.getStatus() != DeviceConnectionStatus.CONNECTED) {
             promise.reject("PRINTER IS NOT CONNECTED", "Printer is not connected");
             return;
@@ -164,6 +165,7 @@ public class RNPosPrinterModule extends ReactContextBaseJavaModule {
         for (int i = 0; i < array.size(); i++) {
             ReadableMap map = array.getMap(i);
             String type = map.getString("type");
+
             switch (type) {
                 case "setFont":
                     int width = map.getInt("width");
@@ -183,7 +185,9 @@ public class RNPosPrinterModule extends ReactContextBaseJavaModule {
                     break;
                 case "printImageFromStorage":
                     String url = map.getString("url");
-                    printer.printImageFromStorage(url);
+                    int dstWidth = map.getInt("width");
+                    int dstHeight = map.getInt("height");
+                    printer.printImageFromStorage(url, dstWidth, dstHeight);
                     break;
                 case "setCharacterMultiple":
                     int x1 = map.getInt("x");
@@ -204,7 +208,6 @@ public class RNPosPrinterModule extends ReactContextBaseJavaModule {
                     Barcode barcode = new Barcode(barcodeType, param1, param2, param3, content);
                     printer.printBarCode(barcode);
                     break;
-
             }
         }
 
@@ -213,18 +216,20 @@ public class RNPosPrinterModule extends ReactContextBaseJavaModule {
 
     private WritableMap fromDevice(IDevice device) {
         WritableMap map = Arguments.createMap();
+
         map.putString("name", device.getDisplayName());
         map.putString("identifier", device.getIdentifier());
+
         return map;
     }
 
     private void sendDevicesEvent() {
-
         WritableArray array = Arguments.createArray();
+
         for (IDevice device : deviceMap.values()) {
             array.pushMap(fromDevice(device));
         }
-        this.getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit("available_bluetooth_devices", array);
+
+        this.getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("available_bluetooth_devices", array);
     }
 }
